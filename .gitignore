@@ -1,0 +1,27 @@
+*/node_modules
+
+# backend_sanity
+*/logs
+*.log
+backend_sanity/coverage
+backend_sanity/dist
+
+# frontend_next
+frontend_next/.pnp
+frontend_next/.pnp.js
+frontend_next/coverage
+frontend_next/.next/
+frontend_next/out/
+frontend_next/build
+frontend_next/.DS_Store
+frontend_next/*.pem
+frontend_next/npm-debug.log*
+frontend_next/yarn-debug.log*
+frontend_next/yarn-error.log*
+frontend_next/.pnpm-debug.log*
+frontend_next/.env.local
+frontend_next/.env.development.local
+frontend_next/.env.test.local
+frontend_next/.env.production.local
+frontend_next/.vercel
+frontend_next/*.tsbuildinfo
