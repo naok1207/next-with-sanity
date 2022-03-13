@@ -2,6 +2,9 @@ import { urlFor } from '@/lib/sanity'
 import { blockToString, getSlugPost } from '@/lib/sanityFunctions'
 import { GetServerSideProps } from 'next'
 
+// @ts-ignore
+import blocksToHtml from '@sanity/block-content-to-html'
+
 type Params = { slug: string }
 
 export const getServerSideProps: GetServerSideProps = async ({params}) => {
@@ -19,14 +22,14 @@ type Props = {
 }
 
 const Page = ({ post }: Props) => {
-  console.log(post)
+  const body = blocksToHtml({blocks: post.body})
 
   return (
     <div>
       <h1>{post.title}</h1>
       {post.mainImage &&
         <img src={urlFor(post.mainImage).url()} />}
-        <div>{blockToString(post.body)}</div>
+      <div dangerouslySetInnerHTML={{ __html: body }} />
     </div>
   )
 }
