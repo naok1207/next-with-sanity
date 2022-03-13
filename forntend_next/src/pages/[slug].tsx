@@ -1,37 +1,32 @@
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-
 import { urlFor } from '@/lib/sanity'
-import { sanityClient } from '@/lib/sanity.server'
+import { blockToString, getSlugPost } from '@/lib/sanityFunctions'
+import { GetServerSideProps } from 'next'
 
-const Page = () => {
-  const router = useRouter()
-  const { slug } = router.query
-  const [isLoading, setIsLoading] = useState(true);
-  const [post, setPost] = useState<any>('');
+type Params = { slug: string }
 
-  useEffect(() => {
-    if (!slug) return;
-    console.log(slug)
-    const query = `*[_type == 'post' && slug.current == '${slug}']`
-    sanityClient.fetch(query).then((data) => {
-      setIsLoading(false)
-      setPost(data[0])
-    })
-  }, [slug]);
+export const getServerSideProps: GetServerSideProps = async ({params}) => {
+  const { slug } = params as Params
+  const post = await getSlugPost({slug})
+  return {
+    props: {
+      post: post
+    }
+  }
+}
 
-  useEffect(() => {
-    if (!post) return;
-    console.log(post)
-  }, [post])
+type Props = {
+  post: any
+}
 
-  if (isLoading) return <div>Loading...</div>
+const Page = ({ post }: Props) => {
+  console.log(post)
 
   return (
     <div>
-      <h1>{slug}</h1>
-      <p>{post.title}</p>
-      {post.mainImage && <img src={urlFor(post.mainImage).url()} />}
+      <h1>{post.title}</h1>
+      {post.mainImage &&
+        <img src={urlFor(post.mainImage).url()} />}
+        <div>{blockToString(post.body)}</div>
     </div>
   )
 }
