@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
-import Footer from '@/containers/layouts/Footer'
-import Header from '@/containers/layouts/Header'
+import Footer from '@/containers/layouts/Footer/Footer'
+import Header from '@/containers/layouts/Header/Header'
 import styles from '@/styles/Home.module.css'
 
 const Home: NextPage = () => {
